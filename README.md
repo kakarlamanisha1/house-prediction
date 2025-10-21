@@ -1,7 +1,0 @@
-"# housepriceprediction" 
-"# housepriceprediction" 
-"# houseprice_1" 
-"# house" 
-"# houseprediction" 
-"# houseprediction" 
-"# Nagavamsi" 
