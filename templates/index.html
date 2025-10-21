@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>🏡 India Housing Price Predictor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+
+        h2 {
+            color: #2c3e50;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        label {
+            display: block;
+            margin-top: 12px;
+            font-weight: bold;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 4px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .checkboxes {
+            margin-top: 15px;
+        }
+
+        .checkboxes label {
+            font-weight: normal;
+            display: inline-block;
+            margin-right: 20px;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #2c3e50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .result, .error {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .result {
+            color: green;
+        }
+
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>🏡 India Housing Price Predictor</h2>
+    <p>Fill in the property details below to estimate the price (in Lakhs):</p>
+
+    {% if prediction is not none %}
+        <div class="result">💰 Estimated Price: ₹ {{ "%.2f"|format(prediction) }} Lakhs</div>
+    {% elif error %}
+        <div class="error">{{ error }}</div>
+    {% endif %}
+
+    <form method="POST">
+        <label>Property Type:</label>
+        <select name="property_type">
+            <option>Apartment</option>
+            <option>Independent House</option>
+            <option>Villa</option>
+        </select>
+
+        <label>BHK:</label>
+        <input type="number" name="bhk" min="1" max="10" required>
+
+        <label>Furnished Status:</label>
+        <select name="furnished_status">
+            <option>Unfurnished</option>
+            <option>Semi-furnished</option>
+            <option>Furnished</option>
+        </select>
+
+        <label>Floor Number:</label>
+        <input type="number" name="floor_no" min="0" max="100" required>
+
+        <label>Total Floors:</label>
+        <input type="number" name="total_floors" min="1" max="100" required>
+
+        <label>Age of Property (years):</label>
+        <input type="number" name="age_of_property" min="0" max="100" required>
+
+        <label>Public Transport Accessibility:</label>
+        <select name="transport_access">
+            <option>Low</option>
+            <option>Medium</option>
+            <option>High</option>
+        </select>
+
+        <label>Parking Space:</label>
+        <select name="parking">
+            <option>Yes</option>
+            <option>No</option>
+        </select>
+
+        <label>Security:</label>
+        <select name="security">
+            <option>Yes</option>
+            <option>No</option>
+        </select>
+
+        <label>Owner Type:</label>
+        <select name="owner_type">
+            <option>Owner</option>
+            <option>Builder</option>
+            <option>Broker</option>
+        </select>
+
+        <label>Availability Status:</label>
+        <select name="availability">
+            <option>Ready_to_Move</option>
+            <option>Under_Construction</option>
+        </select>
+
+        <label>Facing:</label>
+        <select name="facing">
+            <option>East</option>
+            <option>West</option>
+            <option>North</option>
+            <option>South</option>
+        </select>
+
+        <label>State & City:</label>
+        <select name="state_city">
+            {% for city in state_city_list %}
+                <option>{{ city }}</option>
+            {% endfor %}
+        </select>
+
+        <label>Total Area Price (Size × Price per SqFt):</label>
+        <input type="number" name="price_for_area" min="0" step="0.01" required>
+
+        <label>Nearby Schools + Hospitals (combined count):</label>
+        <input type="number" name="school_and_hospital" min="0" max="50" required>
+
+        <div class="checkboxes">
+            <label><input type="checkbox" name="clubhouse"> 🏘️ Clubhouse</label>
+            <label><input type="checkbox" name="garden"> 🌳 Garden</label>
+            <label><input type="checkbox" name="gym"> 🏋️ Gym</label>
+            <label><input type="checkbox" name="playground"> 🛝 Playground</label>
+            <label><input type="checkbox" name="pool"> 🏊 Pool</label>
+        </div>
+
+        <button type="submit">Predict Price</button>
+    </form>
+
+</body>
+</html>
